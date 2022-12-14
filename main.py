@@ -1,6 +1,16 @@
 import numpy as np
+import time as t
+p="============================\n Bienvenue dans AI Ton Prêt \n============================\n"
+strf= p.center(len(p))
+print(strf)
+t.sleep(0.5)
+i = int(input("Saisissez l'âge de la personne : "))
+t.sleep(0.25)
+j = int(input("Saisissez 1 si la personne travaille et 2 si il n'en a pas : ")) #initialisation des entrées
+while (j != 1 and j != 2) :
+    j = int(input("Saisissez 1 si la personne travaille et 2 si il n'en a pas : "))
 
-x_entrer = np.array(([40, 1], [35,2], [23, 2], [60,1], [36,1], [37,2], [56,2], [18,2], [21,2],[27,2],[35,1]),
+x_entrer = np.array(([40, 1], [35,2], [23, 2], [60,1], [36,1], [37,2], [56,2], [18,2], [21,2],[27,2],[i,j]),
                     dtype=float)  # données d'entrer avec deux conditions : age + statut de travail ( 2 = pas de travail, 1 = travail)
 y = np.array(([1], [0], [1], [0], [1], [0], [1], [1], [0], [1]), dtype=float)  # données de sortie /  1 = accord /  0 = refus
 
