@@ -1,7 +1,7 @@
 import numpy as np
 
-x_entrer = np.array(([40, 1], [35,2], [23, 2], [60,1], [36,1], [37,2], [56,2], [18,2], [21,2],[27,2],[75,1]),
-                    dtype=float)  # données d'entrer avec deux conditions age + statut de travail ( 2 = pas de travail, 1 = travail)
+x_entrer = np.array(([40, 1], [35,2], [23, 2], [60,1], [36,1], [37,2], [56,2], [18,2], [21,2],[27,2],[35,1]),
+                    dtype=float)  # données d'entrer avec deux conditions : age + statut de travail ( 2 = pas de travail, 1 = travail)
 y = np.array(([1], [0], [1], [0], [1], [0], [1], [1], [0], [1]), dtype=float)  # données de sortie /  1 = accord /  0 = refus
 
 # div la val max pour avoir un chiffre entre 0 et 1
@@ -22,20 +22,18 @@ class Neural_Network(object):
         self.hiddenSize = 3  # Nombre de neurones cachés
 
         #Poids
-        self.P1 = np.random.randn(self.inputSize,
-                                  self.hiddenSize)  # Matrice de poids entre les neurones d'entrer et cachés
-        self.P2 = np.random.randn(self.hiddenSize,
-                                  self.outputSize)  # Matrice de poids entre les neurones cachés et sortie
+        self.P1 = np.random.randn(self.inputSize,self.hiddenSize)  # Matrice de poids entre les neurones d'entrer et cachés
+        self.P2 = np.random.randn(self.hiddenSize,self.outputSize)  # Matrice de poids entre les neurones cachés et sortie
 
-    # Fonction d'activation sigmoid
+    # Fonction d'activation sigmoid, importante pour la sortie + sigmoid compris entre 0 et 1
     def sigmoid(self, s):
         return 1 / (1 + np.exp(-s))
 
-    # Dérivée de la fonction d'activation
+    # Dérivée de la fonction d'activation pour revenir en "arriere"
     def sigmoidPrime(self, s):
         return s * (1 - s)
 
-    # Fonction de propagation avant ->
+    # Fonction de propagation avant -> (calcul de la sortie)
     def forward(self, X):
 
         self.z = np.dot(X, self.P1)  # Multiplication matricielle entre les valeurs d'entrer et les poids W1
@@ -44,7 +42,7 @@ class Neural_Network(object):
         o = self.sigmoid(self.z3)  # Application de la fonction d'activation, et obtention de notre valeur de sortie final
         return o
 
-    # Fonction de rétropropagation <-
+    # Fonction de rétropropagation <- (calcul de l'erreur et ajustement des poids
     def backward(self, X, y, o):
 
         self.o_error = y - o  # Calcul de l'erreur
@@ -62,9 +60,8 @@ class Neural_Network(object):
         o = self.forward(X)
         self.backward(X, y, o)
 
-    # Fonction de prédiction
+    # Fonction de prédiction (fonction finale)
     def prediction(self):
-
         print("Donnée prédite apres entrainement: ")
         print("Entrée : \n" + str(xPrediction))
         print("Sortie : \n" + str(self.forward(xPrediction)))
@@ -76,9 +73,8 @@ class Neural_Network(object):
 
 
 NN = Neural_Network()
-
-for i in range(5000):  # Choisir nombre d'itération
-
+print("L'IA calcule...")
+for i in range(1000000):  # Choisir nombre d'itération
     NN.train(X, y)
 #print final
 print("Valeurs d'entrées: \n" + str(X))
